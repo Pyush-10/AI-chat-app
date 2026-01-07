@@ -1,23 +1,20 @@
 import "./chatPage.css";
 import NewPrompt from "../../components/newPrompt/NewPrompt";
 import { useQuery } from "@tanstack/react-query";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom"; // Import useParams
 import Markdown from "react-markdown";
 import { IKImage } from "imagekitio-react";
 
 const ChatPage = () => {
-  const path = useLocation().pathname;
-  const chatId = path.split("/").pop();
+  const { id } = useParams(); // Get ID from URL
 
   const { isPending, error, data } = useQuery({
-    queryKey: ["chat", chatId],
+    queryKey: ["chat", id], // KEY MUST MATCH NEWPROMPT EXACTLY
     queryFn: () =>
-      fetch(`${import.meta.env.VITE_API_URL}/api/chats/${chatId}`, {
+      fetch(`${import.meta.env.VITE_API_URL}/api/chats/${id}`, {
         credentials: "include",
       }).then((res) => res.json()),
   });
-
-  console.log(data);
 
   return (
     <div className="chatPage">
@@ -28,7 +25,12 @@ const ChatPage = () => {
             : error
             ? "Something went wrong!"
             : data?.history?.map((message, i) => (
-                <>
+                <div
+                  key={i}
+                  className={
+                    message.role === "user" ? "message user" : "message"
+                  }
+                >
                   {message.img && (
                     <IKImage
                       urlEndpoint={import.meta.env.VITE_IMAGE_KIT_ENDPOINT}
@@ -40,17 +42,13 @@ const ChatPage = () => {
                       lqip={{ active: true, quality: 20 }}
                     />
                   )}
-                  <div
-                    className={
-                      message.role === "user" ? "message user" : "message"
-                    }
-                    key={i}
-                  >
+                  <div className="content">
                     <Markdown>{message.parts[0].text}</Markdown>
                   </div>
-                </>
+                </div>
               ))}
 
+          {/* We don't need to pass chatId anymore, the child handles it */}
           {data && <NewPrompt data={data} />}
         </div>
       </div>

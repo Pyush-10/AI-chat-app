@@ -5,11 +5,13 @@ import { IKImage } from "imagekitio-react";
 import model from "../../lib/gemini";
 import Markdown from "react-markdown";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useParams } from "react-router-dom"; // Import useParams
 
 const NewPrompt = ({ data }) => {
+  const { id } = useParams(); // Get the Chat ID directly from the URL
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
-  const [loading, setLoading] = useState(false); // Added loading state for button
+  const [loading, setLoading] = useState(false);
   const [img, setImg] = useState({
     isLoading: false,
     error: "",
@@ -31,14 +33,14 @@ const NewPrompt = ({ data }) => {
 
   useEffect(() => {
     endRef.current.scrollIntoView({ behavior: "smooth" });
-  }, [data, answer, img.dbData]);
+  }, [data, answer, question, img.dbData]);
 
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    // FIX 1: Accept 'answer' and 'img' as arguments here
     mutationFn: ({ question, answer, img }) => {
-      return fetch(`${import.meta.env.VITE_API_URL}/api/chats/${data._id}`, {
+      // Use the 'id' from useParams
+      return fetch(`${import.meta.env.VITE_API_URL}/api/chats/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -50,31 +52,30 @@ const NewPrompt = ({ data }) => {
         }),
       }).then((res) => res.json());
     },
-    onSuccess: () => {
-      queryClient
-        .invalidateQueries({ queryKey: ["chat", data._id] })
-        .then(() => {
-          formRef.current.reset();
-          setQuestion("");
-          setAnswer("");
-          setLoading(false); // Reset loading
-          setImg({
-            isLoading: false,
-            error: "",
-            dbData: {},
-            aiData: {},
-          });
-        });
+    onSuccess: async () => {
+      // Wait for the re-fetch to complete before clearing the screen
+      await queryClient.invalidateQueries({ queryKey: ["chat", id] });
+
+      formRef.current.reset();
+      setQuestion("");
+      setAnswer("");
+      setLoading(false);
+      setImg({
+        isLoading: false,
+        error: "",
+        dbData: {},
+        aiData: {},
+      });
     },
     onError: (err) => {
       console.log(err);
-      setLoading(false); // Reset loading on error
+      setLoading(false);
     },
   });
 
   const add = async (text, isInitial) => {
     if (!isInitial) setQuestion(text);
-    setLoading(true); // Disable button immediately
+    setLoading(true);
 
     try {
       const result = await chat.sendMessageStream(
@@ -88,8 +89,7 @@ const NewPrompt = ({ data }) => {
         setAnswer(accumulatedText);
       }
 
-      // FIX 2: Pass the FINAL accumulated text directly to mutation
-      // This ensures we don't send an empty string due to stale state
+      // Pass the final text directly to the mutation
       mutation.mutate({
         question: text,
         answer: accumulatedText,
@@ -104,7 +104,7 @@ const NewPrompt = ({ data }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const text = e.target.text.value;
-    if (!text || loading) return; // Prevent double clicks
+    if (!text || loading) return;
     add(text, false);
   };
 
@@ -132,19 +132,16 @@ const NewPrompt = ({ data }) => {
         />
       )}
 
-      {/* CHAT HISTORY */}
-      {data?.history?.map((item, index) => (
-        <div
-          key={index}
-          className={item.role === "user" ? "message user" : "message"}
-        >
+      {/* SHOW QUESTION WHILE LOADING */}
+      {question && (
+        <div className="message user">
           <div className="content">
-            <Markdown>{item.parts[0].text}</Markdown>
+            <Markdown>{question}</Markdown>
           </div>
         </div>
-      ))}
+      )}
 
-      {/* STREAMING PREVIEW */}
+      {/* SHOW ANSWER WHILE LOADING */}
       {answer && (
         <div className="message">
           <div className="content">
