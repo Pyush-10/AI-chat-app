@@ -4,7 +4,8 @@ import {
   HarmCategory,
 } from "@google/generative-ai";
 
-const safetySetting = [
+// FIX 1: Defined as 'safetySettings' (plural) to match the SDK requirement
+const safetySettings = [
   {
     category: HarmCategory.HARM_CATEGORY_HARASSMENT,
     threshold: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
@@ -18,8 +19,10 @@ const safetySetting = [
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_PUBLIC_KEY);
 
 const model = genAI.getGenerativeModel({
-  model: "gemini-1.5-flash",
-  safetySetting,
+  // FIX 2: Using the model confirmed in your list (Index 1)
+  model: "gemini-2.5-flash",
+  // FIX 3: Passing the correct variable name
+  safetySettings,
 });
 
 export default model;
