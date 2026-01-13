@@ -1,0 +1,340 @@
+.contactPage {
+  min-height: 100vh;
+  min-height: 100dvh; /* Dynamic viewport height for better mobile support */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0e0c16 0%, #1a1625 100%);
+  padding: 40px 20px 60px; /* Extra bottom padding to prevent cutoff */
+  box-sizing: border-box;
+  overflow-y: auto; /* Allow scrolling if content overflows */
+}
+
+.contactContainer {
+  max-width: 800px;
+  width: 100%;
+  background: rgba(44, 41, 55, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 40px;
+  backdrop-filter: blur(10px);
+  text-align: center;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.header {
+  margin-bottom: 40px;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #217bfe, #e55571);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  font-size: 28px;
+  font-weight: bold;
+  color: white;
+  box-shadow: 0 8px 32px rgba(33, 123, 254, 0.3);
+}
+
+.header h1 {
+  font-size: 36px;
+  color: #ececec;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, #217bfe, #e55571);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.header p {
+  color: #888;
+  font-size: 16px;
+  margin: 0;
+}
+
+.contactInfo {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Always 2 columns for top row */
+  gap: 24px;
+  margin-bottom: 40px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.infoCard {
+  background: rgba(44, 41, 55, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 24px;
+  transition: all 0.3s ease;
+}
+
+.infoCard:hover {
+  transform: translateY(-4px);
+  border-color: rgba(33, 123, 254, 0.3);
+  box-shadow: 0 8px 32px rgba(33, 123, 254, 0.1);
+}
+
+.icon {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+.infoCard h3 {
+  font-size: 18px;
+  color: #ececec;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.infoCard p {
+  color: #ccc;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+.contactButton {
+  display: inline-block;
+  background: linear-gradient(135deg, #217bfe, #e55571);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(33, 123, 254, 0.3);
+}
+
+.contactButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(33, 123, 254, 0.4);
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.statusIndicator {
+  width: 8px;
+  height: 8px;
+  background: #50c878;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+.status span {
+  color: #50c878;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.techList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.tech {
+  background: rgba(33, 123, 254, 0.2);
+  border: 1px solid rgba(33, 123, 254, 0.3);
+  color: #217bfe;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.tech:hover {
+  background: rgba(33, 123, 254, 0.3);
+  border-color: rgba(33, 123, 254, 0.5);
+  transform: translateY(-1px);
+}
+
+.footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 24px;
+  margin-bottom: 40px; /* Increased bottom margin to prevent cutoff */
+}
+
+.socialLinks {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.socialButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(44, 41, 55, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ececec;
+  padding: 8px 16px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.socialButton:hover {
+  background: rgba(33, 123, 254, 0.2);
+  border-color: rgba(33, 123, 254, 0.4);
+  transform: translateY(-2px);
+  color: #217bfe;
+}
+
+.socialButton.live {
+  background: linear-gradient(135deg, #217bfe, #e55571);
+  border-color: transparent;
+  color: white;
+}
+
+.socialButton.live:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 20px rgba(33, 123, 254, 0.4);
+  color: white;
+}
+
+.footer p {
+  color: #888;
+  font-size: 14px;
+  margin: 0;
+  font-style: italic;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Enhanced Tech Stack Styling */
+.techCard {
+  grid-column: 1 / -1; /* Span full width */
+  max-height: none;
+}
+
+.techSection {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.techSection:last-child {
+  margin-bottom: 0;
+}
+
+.techSection h4 {
+  color: #217bfe;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.techSection .techList {
+  justify-content: center;
+}
+
+/* Mobile responsive */
+@media screen and (max-width: 768px) {
+  .contactPage {
+    padding: 20px 16px 60px;
+    min-height: 100vh;
+    align-items: flex-start;
+  }
+
+  .contactContainer {
+    padding: 24px;
+    margin: 0;
+    max-width: none;
+    width: 100%;
+    min-height: auto;
+  }
+
+  .header h1 {
+    font-size: 28px;
+  }
+
+  .contactInfo {
+    grid-template-columns: 1fr; /* Stack vertically on mobile */
+    gap: 16px;
+  }
+
+  .infoCard {
+    padding: 20px;
+  }
+
+  .avatar {
+    width: 64px;
+    height: 64px;
+    font-size: 24px;
+  }
+
+  .techSection h4 {
+    font-size: 13px;
+  }
+
+  .tech {
+    font-size: 10px;
+    padding: 3px 6px;
+  }
+}
+
+/* Desktop zoom responsiveness */
+@media screen and (min-width: 769px) {
+  .contactContainer {
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  
+  .contactInfo {
+    grid-template-columns: repeat(2, 1fr); /* Keep 2 columns for main cards */
+  }
+  
+  .techCard {
+    grid-column: 1 / -1; /* Tech stack spans full width below */
+  }
+}
+
+/* High zoom level support */
+@media screen and (min-width: 769px) and (max-height: 800px) {
+  .contactPage {
+    padding: 20px;
+    align-items: flex-start;
+  }
+  
+  .contactContainer {
+    margin-top: 20px;
+    margin-bottom: 40px;
+  }
+}

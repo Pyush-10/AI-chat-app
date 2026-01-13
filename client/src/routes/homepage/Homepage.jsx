@@ -10,11 +10,10 @@ const Homepage = () => {
     <div className="homepage">
       <img src="/orbital.png" alt="" className="orbital" />
       <div className="left">
-        <h1>LAMA AI</h1>
+        <h1>SYNAPSE AI</h1>
         <h2>Supercharge your creativity and productivity</h2>
         <h3>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Placeat sint
-          dolorem doloribus, architecto dolor.
+          Chat to start writing, planning, learning, and more with Synapse AI.
         </h3>
         <Link to="/dashboard">Get Started</Link>
       </div>
@@ -43,7 +42,7 @@ const Homepage = () => {
                 () => {
                   setTypingStatus("bot");
                 },
-                "Bot:We produce food for Hamsters",
+                "Synapse:We produce food for Hamsters",
                 2000,
                 () => {
                   setTypingStatus("human2");
@@ -53,7 +52,7 @@ const Homepage = () => {
                 () => {
                   setTypingStatus("bot");
                 },
-                "Bot:We produce food for Chinchillas",
+                "Synapse:We produce food for Chinchillas",
                 2000,
                 () => {
                   setTypingStatus("human1");

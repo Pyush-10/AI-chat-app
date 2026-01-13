@@ -56,22 +56,22 @@ app.get("/api/upload", (req, res) => {
 
 /* CREATE CHAT */
 app.post("/api/chats", requireAuth(), async (req, res) => {
-  const { userId } = req.auth;
+  const { userId } = req.auth; // FIX: Correct usage for Clerk
   const { text } = req.body;
 
   try {
     const newChat = new Chat({
-      userId,
+      userId: userId,
       history: [{ role: "user", parts: [{ text }] }],
     });
 
     const savedChat = await newChat.save();
 
-    const userChats = await UserChats.find({ userId });
+    const userChats = await UserChats.find({ userId: userId });
 
     if (!userChats.length) {
       const newUserChats = new UserChats({
-        userId,
+        userId: userId,
         chats: [
           {
             _id: savedChat._id,
@@ -83,7 +83,7 @@ app.post("/api/chats", requireAuth(), async (req, res) => {
       await newUserChats.save();
     } else {
       await UserChats.updateOne(
-        { userId },
+        { userId: userId },
         {
           $push: {
             chats: {
@@ -108,7 +108,12 @@ app.get("/api/userchats", requireAuth(), async (req, res) => {
 
   try {
     const userChats = await UserChats.find({ userId });
-    res.status(200).send(userChats[0]?.chats || []);
+
+    if (!userChats.length || !userChats[0].chats) {
+      return res.status(200).send([]);
+    }
+
+    res.status(200).send(userChats[0].chats);
   } catch (err) {
     console.log(err);
     res.status(500).send("Error fetching userchats!");
@@ -128,10 +133,17 @@ app.get("/api/chats/:id", requireAuth(), async (req, res) => {
   }
 });
 
-/* UPDATE CHAT */
+/* UPDATE CHAT (DEBUG VERSION) */
 app.put("/api/chats/:id", requireAuth(), async (req, res) => {
   const { userId } = req.auth;
   const { question, answer, img } = req.body;
+
+  // --- DEBUG LOGS ---
+  console.log("--- ATTEMPTING SAVE ---");
+  console.log("Chat ID:", req.params.id);
+  console.log("User ID:", userId);
+  console.log("Question:", question);
+  console.log("Answer Length:", answer?.length);
 
   const newItems = [
     ...(question
@@ -149,27 +161,28 @@ app.put("/api/chats/:id", requireAuth(), async (req, res) => {
         },
       }
     );
-
+    console.log("MongoDB Result:", updatedChat);
     res.status(200).send(updatedChat);
   } catch (err) {
-    console.log(err);
+    console.log("❌ SERVER ERROR:", err);
     res.status(500).send("Error adding conversation!");
   }
 });
 
 /* ------------------ ERROR HANDLER ------------------ */
 
-app.use((err, req, res, next) => {
-  console.error(err);
-  res.status(401).send("Unauthenticated!");
+// SAFE 404 HANDLER (Replaces the broken one)
+app.use((req, res, next) => {
+  // If it's an API route that wasn't caught above, return 404
+  if (req.path.startsWith("/api")) {
+    return res.status(404).json({ error: "API endpoint not found" });
+  }
+  next();
 });
 
-/* ------------------ PRODUCTION ------------------ */
-
-app.use(express.static(path.join(__dirname, "../client/dist")));
-
-app.get(/.*/, (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/dist", "index.html"));
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(401).send("Unauthenticated!");
 });
 
 /* ------------------ SERVER ------------------ */

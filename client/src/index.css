@@ -11,7 +11,30 @@ body {
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
-a{
+a {
   text-decoration: none;
   color: inherit;
+}
+
+/* The background of the scrollbar path (track) */
+::-webkit-scrollbar-track {
+  background: #1e1e1e; /* Dark grey to match your app */
+  border-radius: 4px;
+}
+
+/* The draggable part (thumb) */
+::-webkit-scrollbar-thumb {
+  background: #444; /* Slightly lighter grey */
+  border-radius: 4px;
+}
+
+/* Hover effect so it's easier to see when you grab it */
+::-webkit-scrollbar-thumb:hover {
+  background: #666;
+}
+
+/* 2. Firefox (doesn't support detailed styling like Chrome) */
+* {
+  scrollbar-width: thin; /* Makes it skinnier */
+  scrollbar-color: #444 #1e1e1e; /* thumb color | track color */
 }
