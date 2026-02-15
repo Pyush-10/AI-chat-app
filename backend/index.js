@@ -22,7 +22,7 @@ app.use(
   cors({
     origin: process.env.CLIENT_URL,
     credentials: true,
-  })
+  }),
 );
 
 app.use(express.json());
@@ -91,7 +91,7 @@ app.post("/api/chats", requireAuth(), async (req, res) => {
               title: text.substring(0, 40),
             },
           },
-        }
+        },
       );
     }
 
@@ -159,7 +159,7 @@ app.put("/api/chats/:id", requireAuth(), async (req, res) => {
         $push: {
           history: { $each: newItems },
         },
-      }
+      },
     );
     console.log("MongoDB Result:", updatedChat);
     res.status(200).send(updatedChat);
@@ -186,6 +186,7 @@ app.use((err, req, res, next) => {
 });
 
 /* ------------------ SERVER ------------------ */
+// ninth
 
 app.listen(port, () => {
   connect();
