@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+hlo
+=======
 # Infosys L3 Interview Prep — Gemini AI Chat Project
 
 This README combines the last two coaching chats:
@@ -217,3 +220,4 @@ Use: "Implemented stack is React + Vite + Express + MongoDB + Clerk + Gemini + I
 3. Deep dive on one technical decision (2 collections, streaming, or auth scoping).
 4. Close with improvements you would implement for production.
 
+>>>>>>> 92725e4 (11)
