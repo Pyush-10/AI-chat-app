@@ -20,7 +20,7 @@ const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_PUBLIC_KEY);
 
 const model = genAI.getGenerativeModel({
   // FIX 2: Using the model confirmed in your list (Index 1)
-  model: "gemini-2.5-flash",
+  model: "gemini-2.0-flash",
   // FIX 3: Passing the correct variable name
   safetySettings,
 });

@@ -28,6 +28,7 @@ app.use(
 app.use(express.json());
 app.use(clerkMiddleware());
 
+
 /* ------------------ DB ------------------ */
 
 const connect = async () => {
@@ -104,6 +105,7 @@ app.post("/api/chats", requireAuth(), async (req, res) => {
 
 /* GET USER CHATS */
 app.get("/api/userchats", requireAuth(), async (req, res) => {
+  
   const { userId } = req.auth;
 
   try {
