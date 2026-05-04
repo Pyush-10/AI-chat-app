@@ -20,14 +20,17 @@ const __dirname = path.dirname(__filename);
 
 app.use(
   cors({
-    origin: process.env.CLIENT_URL,
+    origin: [
+      "http://localhost:5173", // Your local frontend URL (change port if you use 3000)
+      "https://ai-chat-app-dxyw.vercel.app", // Your Vercel production URL
+      process.env.CLIENT_URL, // Keeps the env variable as a fallback just in case
+    ],
     credentials: true,
   }),
 );
 
 app.use(express.json());
 app.use(clerkMiddleware());
-
 
 /* ------------------ DB ------------------ */
 
@@ -105,7 +108,6 @@ app.post("/api/chats", requireAuth(), async (req, res) => {
 
 /* GET USER CHATS */
 app.get("/api/userchats", requireAuth(), async (req, res) => {
-  
   const { userId } = req.auth;
 
   try {
