@@ -22,7 +22,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173", // Your local frontend URL (change port if you use 3000)
-      "https://ai-chat-app-dxyw.vercel.app", // Your Vercel production URL
+      "https://ai-chat-app-ruddy-xi.vercel.app/", // Your Vercel production URL
       process.env.CLIENT_URL, // Keeps the env variable as a fallback just in case
     ],
     credentials: true,
