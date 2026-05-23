@@ -1,5 +1,5 @@
 <<<<<<< HEAD
-hlo
+
 =======
 # Infosys L3 Interview Prep — Gemini AI Chat Project
 
