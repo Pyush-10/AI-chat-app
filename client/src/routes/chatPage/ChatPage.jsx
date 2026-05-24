@@ -9,11 +9,16 @@ const ChatPage = () => {
   const { id } = useParams(); // Get ID from URL
 
   const { isPending, error, data } = useQuery({
-    queryKey: ["chat", id], // KEY MUST MATCH NEWPROMPT EXACTLY
-    queryFn: () =>
-      fetch(`${import.meta.env.VITE_API_URL}/api/chats/${id}`, {
+    queryKey: ["chat", id],
+    queryFn: async () => {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/chats/${id}`, {
         credentials: "include",
-      }).then((res) => res.json()),
+      });
+      if (!res.ok) {
+        throw new Error(`API Error: ${res.status} ${res.statusText}`);
+      }
+      return res.json();
+    },
   });
 
   return (
@@ -23,7 +28,7 @@ const ChatPage = () => {
           {isPending
             ? "Loading..."
             : error
-            ? "Something went wrong!"
+            ? `Error: ${error?.message || "Something went wrong!"}`
             : data?.history?.map((message, i) => (
                 <div
                   key={i}
