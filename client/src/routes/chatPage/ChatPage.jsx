@@ -10,15 +10,10 @@ const ChatPage = () => {
 
   const { isPending, error, data } = useQuery({
     queryKey: ["chat", id],
-    queryFn: async () => {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/chats/${id}`, {
+    queryFn: () =>
+      fetch(`${import.meta.env.VITE_API_URL}/api/chats/${id}`, {
         credentials: "include",
-      });
-      if (!res.ok) {
-        throw new Error(`API Error: ${res.status} ${res.statusText}`);
-      }
-      return res.json();
-    },
+      }).then((res) => res.json()),
   });
 
   return (
@@ -28,7 +23,7 @@ const ChatPage = () => {
           {isPending
             ? "Loading..."
             : error
-            ? `Error: ${error?.message || "Something went wrong!"}`
+            ? "Something went wrong!"
             : data?.history?.map((message, i) => (
                 <div
                   key={i}
