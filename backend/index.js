@@ -22,7 +22,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://ai-chat-app-seven-bay.vercel.app",
+
       "https://ai-chat-app-ruddy-xi.vercel.app",
       process.env.CLIENT_URL,
     ],
