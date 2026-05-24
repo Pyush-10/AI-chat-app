@@ -53,6 +53,10 @@ const imagekit = new ImageKit({
 
 /* ------------------ ROUTES ------------------ */
 
+app.get("/", (req, res) => {
+  res.send("Backend running successfully");
+});
+
 app.get("/api/upload", (req, res) => {
   const result = imagekit.getAuthenticationParameters();
   res.send(result);
@@ -107,9 +111,6 @@ app.post("/api/chats", requireAuth(), async (req, res) => {
 });
 
 /* GET USER CHATS */
-app.get("/", (req, res) => {
-  res.send("Backend running successfully");
-});
 app.get("/api/userchats", requireAuth(), async (req, res) => {
   const { userId } = req.auth;
 
