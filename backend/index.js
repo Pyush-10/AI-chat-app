@@ -21,9 +21,9 @@ const __dirname = path.dirname(__filename);
 app.use(
   cors({
     origin: [
-      "http://localhost:5173", // Your local frontend URL (change port if you use 3000)
-      "https://ai-chat-app-ruddy-xi.vercel.app/", // Your Vercel production URL
-      process.env.CLIENT_URL, // Keeps the env variable as a fallback just in case
+      "http://localhost:5173",
+      "https://ai-chat-app-seven-bay.vercel.app",
+      process.env.CLIENT_URL,
     ],
     credentials: true,
   }),
