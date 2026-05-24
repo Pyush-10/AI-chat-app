@@ -23,6 +23,7 @@ app.use(
     origin: [
       "http://localhost:5173",
       "https://ai-chat-app-seven-bay.vercel.app",
+      "https://ai-chat-app-ruddy-xi.vercel.app",
       process.env.CLIENT_URL,
     ],
     credentials: true,
@@ -113,6 +114,9 @@ app.post("/api/chats", requireAuth(), async (req, res) => {
 /* GET USER CHATS */
 app.get("/api/userchats", requireAuth(), async (req, res) => {
   const { userId } = req.auth;
+
+  console.log("✅ /api/userchats called");
+  console.log("userId:", userId);
 
   try {
     const userChats = await UserChats.find({ userId });
