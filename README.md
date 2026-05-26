@@ -1,6 +1,7 @@
 <<<<<<< HEAD
 hlo
 =======
+op
 # Infosys L3 Interview Prep — Gemini AI Chat Project
 
 This README combines the last two coaching chats:
